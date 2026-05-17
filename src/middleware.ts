@@ -2,11 +2,6 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-
-
-  console.log("--- MIDDLEWARE RUNNING FOR:", request.nextUrl.pathname);
-  
-  // ... rest of your code
   // 1. Get the token from cookies
   const token = request.cookies.get("token");
   const pathname = request.nextUrl.pathname;

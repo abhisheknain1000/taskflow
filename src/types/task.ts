@@ -1,3 +1,10 @@
+export interface PopulatedUserRef {
+  _id: string;
+  name?: string;
+  email?: string;
+  role?: string;
+}
+
 export interface Task {
 
   _id: string;
@@ -23,9 +30,11 @@ export interface Task {
 
   completedAt?: string | null;
 
-  createdBy: string;
+  createdBy: string | PopulatedUserRef;
 
-  assignedTo: string;
+  assignedTo: string | PopulatedUserRef;
+
+  project?: string | { _id: string; name: string; status?: string };
 
   createdAt: string;
 

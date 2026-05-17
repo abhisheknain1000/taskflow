@@ -8,6 +8,7 @@ import {
   CheckSquare,
   Archive,
   LogOut,
+  FolderKanban,
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -18,6 +19,12 @@ const links = [
     label: "Dashboard",
     href: "/dashboard",
     icon: LayoutDashboard,
+  },
+
+  {
+    label: "Projects",
+    href: "/dashboard/projects",
+    icon: FolderKanban,
   },
 
   {
@@ -85,7 +92,11 @@ export default function Sidebar() {
       <nav className="flex-1 p-4 space-y-2">
         {links.map((link) => {
           const Icon = link.icon;
-          const active = pathname === link.href;
+          const active =
+            link.href === "/dashboard"
+              ? pathname === "/dashboard"
+              : pathname === link.href ||
+                pathname.startsWith(`${link.href}/`);
 
           return (
             <Link

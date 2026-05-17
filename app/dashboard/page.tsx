@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -14,8 +13,6 @@ import {
   BriefcaseBusiness,
 } from "lucide-react";
 
-import Sidebar from "@/components/layout/sidebar";
-
 import Topbar from "@/components/layout/topbar";
 
 import StatsCard from "@/components/dashboard/stats-card";
@@ -26,15 +23,9 @@ import TaskCard from "@/components/task/task-card";
 
 import TaskSkeleton from "@/components/task/task-skeleton";
 
-import { getTasks } from "@/services/task-service";
-
 import { useTaskStore } from "@/store/task-store";
 
 import { useAuthStore } from "@/store/auth-store";
-
-import { Task } from "@/types/task";
-
-import {User} from "@/types/user"
 
 export default function DashboardPage() {
 
@@ -45,9 +36,7 @@ export default function DashboardPage() {
 
   const {
     tasks,
-    setTasks,
     loading,
-    setLoading,
   } = useTaskStore();
 
   const [search, setSearch] =
@@ -69,73 +58,6 @@ export default function DashboardPage() {
 
   const isMember =
     user?.role === "member";
-
-  // FETCH TASKS
-
-  useEffect(() => {
-
-    const fetchTasks =
-      async () => {
-
-        try {
-
-          setLoading(true);
-
-          const response =
-            await getTasks();
-
-            const extractedTasks: Task[] =
-
-            Array.isArray(response)
-              ? response
-          
-              : Array.isArray(
-                  (response as any)?.tasks
-                )
-              ? (response as any).tasks
-          
-              : Array.isArray(
-                  (response as any)?.data
-                )
-              ? (response as any).data
-          
-              : [];
-          // MEMBER ONLY SEES ASSIGNED TASKS
-
-          const visibleTasks =
-            isMember
-              ? extractedTasks.filter(
-                  (task) =>
-                    task.assignedTo ===
-                    user?._id
-                )
-              : extractedTasks;
-
-          setTasks(
-            visibleTasks
-          );
-
-        } catch (error) {
-
-          console.log(
-            "Task fetch failed:",
-            error
-          );
-
-        } finally {
-
-          setLoading(false);
-        }
-      };
-
-    fetchTasks();
-
-  }, [
-    setTasks,
-    setLoading,
-    user,
-    isMember,
-  ]);
 
   // FILTERS
 
@@ -244,20 +166,14 @@ export default function DashboardPage() {
     );
 
   return (
-    <main className="
-      min-h-screen
+    <motion.div className="
+      flex-1
+      flex
+      flex-col
       bg-[#0B1020]
       text-white
-      flex
+      min-h-screen
     ">
-
-      <Sidebar />
-
-      <div className="
-        flex-1
-        flex
-        flex-col
-      ">
 
         <Topbar />
 
@@ -717,7 +633,6 @@ export default function DashboardPage() {
               </div>
             )}
         </div>
-      </div>
-    </main>
+    </motion.div>
   );
 }

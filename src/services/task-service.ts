@@ -1,63 +1,43 @@
 import { API } from "@/lib/axios";
+import { unwrapApiData } from "@/lib/api-utils";
+import { extractTasksFromResponse } from "@/lib/task-utils";
 import { Task } from "@/types/task";
 
-/** 
- * Define a specific interface for Task Creation 
- * createdBy is set server-side from the authenticated user, not sent from client
- */
-export interface CreateTaskRequest extends Omit<Partial<Task>, "createdBy" | "createdAt" | "updatedAt"> {
+export interface CreateTaskRequest
+  extends Omit<
+    Partial<Task>,
+    "createdBy" | "createdAt" | "updatedAt"
+  > {
   title: string;
   description?: string;
   priority?: "low" | "medium" | "high" | "urgent";
   deadline?: string;
-  assignedTo?: string; // Optional - if not provided, defaults to creator
+  assignedTo?: string;
+  project?: string;
   status?: "todo" | "in-progress" | "completed";
 }
 
-// GET ALL TASKS
 export const getTasks = async (): Promise<Task[]> => {
   const response = await API.get("/tasks");
-  return response.data;
+  return extractTasksFromResponse(unwrapApiData(response.data));
 };
 
-// CREATE TASK
 export const createTask = async (data: CreateTaskRequest) => {
   const response = await API.post("/tasks", data);
-  return response.data;
+  return unwrapApiData<Task>(response.data);
 };
 
-// UPDATE TASK
 export const updateTask = async (id: string, data: Partial<Task>) => {
   const response = await API.patch(`/tasks/${id}`, data);
-  return response.data;
+  return unwrapApiData<Task>(response.data);
 };
 
-// DELETE TASK
 export const deleteTask = async (id: string) => {
   const response = await API.delete(`/tasks/${id}`);
   return response.data;
 };
 
-// ARCHIVE TASK
-export const archiveTask = async (id: string, archived: boolean) => {
-  const response = await API.patch(`/tasks/${id}`, { archived });
-  return response.data;
-};
-
-// UPDATE STATUS
-export const updateTaskStatus = async (
-  id: string,
-  status: "todo" | "in-progress" | "completed"
-) => {
-  const response = await API.patch(`/tasks/${id}`, { status });
-  return response.data;
-};
-
-// UPDATE PRIORITY
-export const updateTaskPriority = async (
-  id: string,
-  priority: "low" | "medium" | "high" | "urgent"
-) => {
-  const response = await API.patch(`/tasks/${id}`, { priority });
-  return response.data;
+export const archiveTask = async (id: string) => {
+  const response = await API.patch(`/tasks/${id}/archive`);
+  return unwrapApiData<Task>(response.data);
 };
