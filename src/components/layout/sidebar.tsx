@@ -115,15 +115,74 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="p-4 border-t border-white/10">
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-400 hover:bg-red-500/10 hover:text-red-400 transition-all"
-        >
-          <LogOut size={20} />
-          Logout
-        </button>
-      </div>
+  <div className="
+    hidden
+    lg:block
+    p-4
+    border-t
+    border-white/10
+  ">
+
+    <button
+      onClick={handleLogout}
+      className="
+        w-full
+        flex
+        items-center
+        gap-3
+        px-4
+        py-3
+        rounded-2xl
+        text-slate-400
+        hover:bg-red-500/10
+        hover:text-red-400
+        transition-all
+      "
+    >
+
+      <LogOut size={20} />
+
+      Logout
+    </button>
+  </div>
+
+
+  <div className="
+    fixed
+    bottom-4
+    left-4
+    right-4
+    z-50
+    lg:hidden
+  ">
+
+    <button
+      onClick={handleLogout}
+      className="
+        w-full
+        flex
+        items-center
+        justify-center
+        gap-3
+        px-4
+        py-4
+        rounded-2xl
+        bg-red-500/10
+        border
+        border-red-500/20
+        text-red-400
+        backdrop-blur-xl
+        active:scale-95
+        transition-all
+      "
+    >
+
+      <LogOut size={20} />
+
+      Logout
+    </button>
+  </div>
+
     </aside>
   );
 }
