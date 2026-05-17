@@ -125,7 +125,7 @@ export default function AdminDashboardView() {
         >
           <option value="all">All Tasks</option>
           <option value="completed">Completed</option>
-          <option value="in-progress">In Progress</option>
+          <option value="in-progress">In-Progress</option>
         </select>
       </motion.div>
 
