@@ -21,8 +21,8 @@ import { Input } from "@/components/ui/input";
 
 import { API } from "@/lib/axios";
 
+import { getDashboardPathForRole } from "@/lib/auth-cookies";
 import { useAuthStore } from "@/store/auth-store";
-import Cookies from "js-cookie";
 
 import {
   LoginInput,
@@ -99,65 +99,13 @@ export default function LoginForm() {
 
         // SAVE AUTH
 
-        setAuth(
-          result.user,
-          result.token
-        );
+        setAuth(result.user, result.token);
 
-        // SAVE COOKIES
-        
-        Cookies.set(
-  "token",
-  result.token,
-  {
-    path: "/",
-  }
-);
+        toast.success("Login successful", { duration: 3000 });
 
-Cookies.set(
-  "role",
-  result.user.role,
-  {
-    path: "/",
-  }
-);
-
-Cookies.set(
-  "userId",
-  result.user._id,
-  {
-    path: "/",
-  }
-);
-
-        toast.success(
-          "Login successful",
-          {
-            duration: 3000,
-          }
-        );
-
-        // ROLE REDIRECT
-
-        const path =
-
-  result.user.role ===
-  "admin"
-
-    ? "/admin/dashboard"
-
-    : result.user.role ===
-      "manager"
-
-    ? "/dashboard"
-
-    : "/dashboard";
-
-setTimeout(() => {
-
-  router.push(path);
-
-}, 600);
+        setTimeout(() => {
+          router.push(getDashboardPathForRole(result.user.role));
+        }, 600);
       } catch (
         error: unknown
       ) {

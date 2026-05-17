@@ -29,6 +29,7 @@ import { useTaskStore } from "@/store/task-store";
 import { useProjectStore } from "@/store/project-store";
 import { User } from "@/types/user";
 import { getAssigneeRoles } from "@/lib/task-permissions";
+import { dialogTriggerBtn } from "@/lib/responsive-classes";
 
 interface CreateTaskDialogProps {
   user?: User | null;
@@ -145,15 +146,32 @@ export default function CreateTaskDialog({
       }}
     >
       <DialogTrigger asChild>
-        <Button className="bg-[#7C5CFF] hover:bg-[#6D4EFF] rounded-2xl px-6 h-12 gap-2 shadow-lg shadow-[#7C5CFF]/20 transition-all active:scale-95">
-          <Plus size={20} />
+        <Button
+          type="button"
+          className={`${dialogTriggerBtn} shadow-lg shadow-[#7C5CFF]/20 transition-all active:scale-95`}
+        >
+          <Plus size={20} className="shrink-0" />
           Create New Task
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="bg-[#0B1020] border-white/10 text-white sm:max-w-[500px]">
+      <DialogContent
+        className="
+          z-[100]
+          w-[calc(100%-2rem)]
+          max-w-[500px]
+          max-h-[min(90dvh,40rem)]
+          overflow-y-auto
+          border-white/10
+          bg-[#0B1020]
+          p-6
+          text-white
+        "
+      >
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">New Task</DialogTitle>
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-white">
+            New Task
+          </DialogTitle>
           <DialogDescription className="text-slate-400">
             {user.role === "admin"
               ? "Assign to a manager or member."
@@ -190,7 +208,7 @@ export default function CreateTaskDialog({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-xs text-slate-400 ml-1 uppercase font-semibold">
                 Priority
@@ -201,10 +219,10 @@ export default function CreateTaskDialog({
                   setFormData({ ...formData, priority: val })
                 }
               >
-                <SelectTrigger className="bg-white/5 border-white/10 h-12 rounded-xl">
+                <SelectTrigger className="w-full bg-white/5 border-white/10 h-12 rounded-xl text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0B1020] border-white/10 text-white">
+                <SelectContent className="z-[110] bg-[#0B1020] border-white/10 text-white">
                   <SelectItem value="low">Low</SelectItem>
                   <SelectItem value="medium">Medium</SelectItem>
                   <SelectItem value="high">High</SelectItem>
@@ -238,10 +256,10 @@ export default function CreateTaskDialog({
                 setFormData({ ...formData, assignedTo: value })
               }
             >
-              <SelectTrigger className="bg-white/5 border-white/10 h-12 rounded-xl">
+              <SelectTrigger className="w-full bg-white/5 border-white/10 h-12 rounded-xl text-white">
                 <SelectValue placeholder="Select user" />
               </SelectTrigger>
-              <SelectContent className="bg-[#0B1020] border-white/10 text-white">
+              <SelectContent className="z-[110] bg-[#0B1020] border-white/10 text-white">
                 {filteredUsers.map((assignee) => (
                   <SelectItem
                     key={assignee._id}
@@ -268,10 +286,10 @@ export default function CreateTaskDialog({
                   })
                 }
               >
-                <SelectTrigger className="bg-white/5 border-white/10 h-12 rounded-xl">
+                <SelectTrigger className="w-full bg-white/5 border-white/10 h-12 rounded-xl text-white">
                   <SelectValue placeholder="No project" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#0B1020] border-white/10 text-white">
+                <SelectContent className="z-[110] bg-[#0B1020] border-white/10 text-white">
                   <SelectItem value="none">No project</SelectItem>
                   {projects.map((project) => (
                     <SelectItem key={project._id} value={project._id}>
@@ -286,7 +304,7 @@ export default function CreateTaskDialog({
           <Button
             onClick={handleSubmit}
             disabled={loading}
-            className="w-full bg-[#7C5CFF] hover:bg-[#6D4EFF] h-12 rounded-xl font-bold"
+            className="w-full border-0 bg-[#7C5CFF] text-white hover:bg-[#6D4EFF] hover:text-white h-12 rounded-xl font-bold"
           >
             {loading ? (
               <span className="flex items-center gap-2">

@@ -136,7 +136,7 @@ export default function EditTaskDialog({ task }: EditTaskDialogProps) {
         </button>
       </DialogTrigger>
 
-      <DialogContent className="bg-[#121A2B] border-white/10 text-white">
+      <DialogContent className="bg-[#121A2B] border-white/10 text-white sm:max-w-[500px] max-h-[min(90vh,40rem)] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {isMember ? "Update Task Status" : "Edit Task"}

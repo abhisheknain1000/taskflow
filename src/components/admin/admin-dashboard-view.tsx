@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import StatsCard from "@/components/dashboard/stats-card";
 import TaskCard from "@/components/task/task-card";
 import CreateTaskDialog from "@/components/task/create-task-dialog";
+import { pageMain, pageSubtitle, pageTitle } from "@/lib/responsive-classes";
 import { useTaskStore } from "@/store/task-store";
 import { useAuthStore } from "@/store/auth-store";
 
@@ -65,23 +66,27 @@ export default function AdminDashboardView() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="flex-1 p-8 overflow-y-auto"
+      className={`flex-1 overflow-y-auto min-w-0 ${pageMain}`}
     >
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-        <div>
-          <div className="flex items-center gap-3">
-            <Shield className="text-[#7C5CFF]" />
-            <h1 className="text-4xl font-bold">Admin Dashboard</h1>
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6 min-w-0">
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+            <Shield className="text-[#7C5CFF] shrink-0" />
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+              Admin Dashboard
+            </h1>
           </div>
-          <p className="text-slate-400 mt-2">
+          <p className={pageSubtitle}>
             Manage managers, tasks, priorities, and workflow
           </p>
         </div>
 
-        <CreateTaskDialog user={user} />
+        <div className="w-full sm:w-auto shrink-0 flex sm:justify-end">
+          <CreateTaskDialog user={user} />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
         <StatsCard title="Total Tasks" value={tasks.length.toString()} />
         <StatsCard
           title="Completed"
@@ -103,8 +108,8 @@ export default function AdminDashboardView() {
         />
       </div>
 
-      <motion.div className="mt-10 flex flex-col lg:flex-row gap-4">
-        <div className="relative flex-1">
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <div className="relative flex-1 min-w-0">
           <Search
             className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
             size={18}
@@ -114,22 +119,22 @@ export default function AdminDashboardView() {
             placeholder="Search tasks..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full h-12 rounded-2xl bg-white/5 border border-white/10 pl-12 pr-4 outline-none focus:border-[#7C5CFF]"
+            className="w-full h-12 rounded-2xl bg-white/5 border border-white/10 pl-12 pr-4 outline-none focus:border-[#7C5CFF] text-sm sm:text-base"
           />
         </div>
 
         <select
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="h-12 rounded-2xl bg-[#151B2D] border border-white/10 px-4 text-white outline-none"
+          className="h-12 w-full sm:w-auto sm:min-w-[10rem] rounded-2xl bg-[#151B2D] border border-white/10 px-4 text-white outline-none text-sm sm:text-base"
         >
           <option value="all">All Tasks</option>
           <option value="completed">Completed</option>
           <option value="in-progress">In-Progress</option>
         </select>
-      </motion.div>
+      </div>
 
-      <div className="mt-10 grid grid-cols-1 xl:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6">
         {loading ? (
           Array.from({ length: 6 }).map((_, i) => (
             <div
@@ -138,7 +143,9 @@ export default function AdminDashboardView() {
             />
           ))
         ) : filteredTasks.length === 0 ? (
-          <div className="text-slate-500 text-lg">No tasks found.</div>
+          <p className="text-slate-500 text-base sm:text-lg col-span-full">
+            No tasks found.
+          </p>
         ) : (
           filteredTasks.map((task, index) => (
             <motion.div

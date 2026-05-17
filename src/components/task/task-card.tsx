@@ -15,6 +15,7 @@ import {
   canUpdateTaskStatus,
   isTaskCreatedByAdmin,
 } from "@/lib/task-permissions";
+import { cardPadding } from "@/lib/responsive-classes";
 
 interface TaskCardProps {
   task: Task;
@@ -105,13 +106,13 @@ export default function TaskCard({ task }: TaskCardProps) {
       transition={{ duration: 0.25 }}
       className={`rounded-3xl border ${
         isOverdue ? "border-red-500/40" : "border-white/10"
-      } bg-gradient-to-br from-white/5 to-white/[0.02] p-6 backdrop-blur-xl transition-all`}
+      } bg-gradient-to-br from-white/5 to-white/[0.02] ${cardPadding} backdrop-blur-xl transition-all min-w-0`}
     >
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1">
+      <div className="flex items-start justify-between gap-3 sm:gap-4 min-w-0">
+        <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
             <h3
-              className={`text-xl font-semibold ${
+              className={`text-lg sm:text-xl font-semibold break-words ${
                 task.status === "completed"
                   ? "line-through text-slate-500"
                   : "text-white"
@@ -145,14 +146,14 @@ export default function TaskCard({ task }: TaskCardProps) {
             )}
           </div>
 
-          <p className="text-slate-400 mt-3 leading-relaxed">
+          <p className="text-slate-400 mt-2 sm:mt-3 leading-relaxed text-sm sm:text-base break-words">
             {task.description}
           </p>
 
-          <p className="text-xs text-slate-500 mt-3">
+          <p className="text-xs text-slate-500 mt-2 sm:mt-3 break-words">
             Created by: {getCreatorLabel(task)}
           </p>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-500 mt-1 break-words">
             Assigned to: {getAssigneeLabel(task)}
           </p>
         </div>
@@ -185,9 +186,9 @@ export default function TaskCard({ task }: TaskCardProps) {
       </div>
 
       {task.deadline && (
-        <div className="mt-5 flex items-center gap-2 text-sm text-slate-400">
-          <CalendarDays size={16} />
-          <span>
+        <div className="mt-4 sm:mt-5 flex items-start sm:items-center gap-2 text-xs sm:text-sm text-slate-400 min-w-0">
+          <CalendarDays size={16} className="shrink-0 mt-0.5 sm:mt-0" />
+          <span className="break-words">
             Due:{" "}
             {new Date(task.deadline).toLocaleString([], {
               dateStyle: "medium",

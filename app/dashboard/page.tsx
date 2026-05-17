@@ -177,11 +177,7 @@ export default function DashboardPage() {
 
         <Topbar />
 
-        <div className="
-          p-6
-          lg:p-10
-          space-y-8
-        ">
+        <div className="p-4 sm:p-6 lg:p-10 space-y-6 sm:space-y-8 min-w-0">
 
           {/* HERO */}
 
@@ -201,55 +197,29 @@ export default function DashboardPage() {
               bg-gradient-to-r
               from-[#7C5CFF]/20
               to-cyan-500/10
-              p-8
+              p-4 sm:p-6 lg:p-8
               backdrop-blur-xl
             "
           >
 
-            <div className="
-              flex
-              items-center
-              justify-between
-              flex-wrap
-              gap-6
-            ">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
+              <div className="min-w-0 flex-1">
 
-              <div>
-
-                <h1 className="
-                  text-4xl
-                  font-bold
-                  tracking-tight
-                ">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight break-words">
                   Welcome back,
                   {" "}
                   {user?.name}
                   👋
                 </h1>
 
-                <p className="
-                  text-slate-300
-                  mt-3
-                  max-w-2xl
-                  leading-relaxed
-                ">
+                <p className="text-slate-300 mt-2 sm:mt-3 max-w-2xl leading-relaxed text-sm sm:text-base">
                   Manage tasks,
                   collaborate with teams,
                   and track project workflows.
                 </p>
               </div>
 
-              <div className="
-                flex
-                items-center
-                gap-3
-                px-5
-                py-4
-                rounded-2xl
-                bg-white/5
-                border
-                border-white/10
-              ">
+              <div className="flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-4 rounded-2xl bg-white/5 border border-white/10 shrink-0 self-start sm:self-auto">
 
                 {isAdmin && (
                   <Shield className="text-red-400" />
@@ -290,7 +260,7 @@ export default function DashboardPage() {
             grid-cols-1
             md:grid-cols-2
             xl:grid-cols-4
-            gap-6
+            gap-4 sm:gap-6
           ">
 
             <StatsCard
@@ -351,25 +321,15 @@ export default function DashboardPage() {
                 border
                 border-white/10
                 bg-white/5
-                p-6
+                p-4 sm:p-6
                 backdrop-blur-xl
               "
             >
 
-              <div className="
-                flex
-                items-center
-                justify-between
-                flex-wrap
-                gap-6
-              ">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
+                <div className="min-w-0">
 
-                <div>
-
-                  <h2 className="
-                    text-2xl
-                    font-bold
-                  ">
+                  <h2 className="text-xl sm:text-2xl font-bold">
                     Team Workspace
                   </h2>
 
@@ -384,10 +344,10 @@ export default function DashboardPage() {
                 </div>
 
                 {user && (
-  <CreateTaskDialog
-    user={user}
-  />
-)}
+                  <div className="w-full sm:w-auto shrink-0 flex sm:justify-end">
+                    <CreateTaskDialog user={user} />
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
@@ -435,7 +395,7 @@ export default function DashboardPage() {
                 setCurrentPage(1);
               }}
               className="
-                h-12
+                h-12 w-full sm:w-auto min-w-0
                 rounded-2xl
                 bg-[#121A2B]
                 text-white
@@ -509,21 +469,13 @@ export default function DashboardPage() {
                 border
                 border-white/10
                 bg-white/5
-                p-14
+                p-8 sm:p-14
                 text-center
               ">
 
-                <div className="
-                  text-6xl
-                ">
-                  📋
-                </div>
+                <div className="text-5xl sm:text-6xl">📋</div>
 
-                <h2 className="
-                  text-3xl
-                  font-bold
-                  mt-4
-                ">
+                <h2 className="text-2xl sm:text-3xl font-bold mt-4">
                   No Tasks Found
                 </h2>
 

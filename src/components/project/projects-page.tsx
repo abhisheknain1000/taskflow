@@ -4,6 +4,7 @@ import { useAuthStore } from "@/store/auth-store";
 import { useProjectStore } from "@/store/project-store";
 import CreateProjectDialog from "@/components/project/create-project-dialog";
 import ProjectCard from "@/components/project/project-card";
+import { pageMain, pageSubtitle, pageTitle } from "@/lib/responsive-classes";
 
 export default function ProjectsPage() {
   const user = useAuthStore((state) => state.user);
@@ -11,22 +12,25 @@ export default function ProjectsPage() {
   const isAdmin = user?.role === "admin";
 
   return (
-    <main className="p-8 space-y-8">
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-        <div>
-          <h1 className="text-3xl font-bold text-white">Projects</h1>
-          <p className="text-slate-400 mt-2">
+    <main className={pageMain}>
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6 min-w-0">
+        <div className="min-w-0 flex-1">
+          <h1 className={pageTitle}>Projects</h1>
+          <p className={pageSubtitle}>
             {isAdmin
               ? "Create projects and assign managers and members."
               : "Projects you are part of."}
           </p>
         </div>
-
-        {isAdmin && <CreateProjectDialog />}
+        {isAdmin && (
+          <div className="w-full sm:w-auto shrink-0">
+            <CreateProjectDialog />
+          </div>
+        )}
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6">
           {Array.from({ length: 4 }).map((_, index) => (
             <div
               key={index}
@@ -35,9 +39,9 @@ export default function ProjectsPage() {
           ))}
         </div>
       ) : projects.length === 0 ? (
-        <div className="text-slate-500 text-lg">No projects yet.</div>
+        <p className="text-slate-500 text-base sm:text-lg">No projects yet.</p>
       ) : (
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6">
           {projects.map((project) => (
             <ProjectCard key={project._id} project={project} />
           ))}

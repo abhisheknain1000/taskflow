@@ -8,6 +8,7 @@ import { PopulatedUserRef } from "@/types/task";
 import { deleteProject } from "@/services/project-service";
 import { useProjectStore } from "@/store/project-store";
 import { useAuthStore } from "@/store/auth-store";
+import { cardPadding } from "@/lib/responsive-classes";
 
 interface ProjectCardProps {
   project: Project;
@@ -43,11 +44,15 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   };
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h3 className="text-xl font-semibold text-white">{project.name}</h3>
-          <p className="text-slate-400 mt-2">
+    <div
+      className={`rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] ${cardPadding} min-w-0`}
+    >
+      <div className="flex items-start justify-between gap-3 sm:gap-4 min-w-0">
+        <div className="min-w-0 flex-1">
+          <h3 className="text-lg sm:text-xl font-semibold text-white break-words">
+            {project.name}
+          </h3>
+          <p className="text-slate-400 mt-2 text-sm sm:text-base break-words">
             {project.description || "No description"}
           </p>
         </div>
@@ -68,7 +73,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           <Users size={16} className="mt-0.5 text-[#7C5CFF]" />
           <div>
             <p className="font-medium text-white">Managers</p>
-            <p>{formatPeople(project.managers)}</p>
+            <p className="break-words">{formatPeople(project.managers)}</p>
           </div>
         </div>
 
@@ -76,7 +81,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           <Users size={16} className="mt-0.5 text-cyan-400" />
           <div>
             <p className="font-medium text-white">Members</p>
-            <p>{formatPeople(project.members)}</p>
+            <p className="break-words">{formatPeople(project.members)}</p>
           </div>
         </div>
       </div>

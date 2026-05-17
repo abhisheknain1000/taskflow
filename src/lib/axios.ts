@@ -1,35 +1,42 @@
 import axios from "axios";
 
-export const API =
-  axios.create({
+import { clearAuthCookies, getAuthToken } from "@/lib/auth-cookies";
 
-    baseURL:
-      process.env
-        .NEXT_PUBLIC_API_URL,
+export const API = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
+});
 
-    withCredentials: true,
-  });
+API.interceptors.request.use((config) => {
+  if (typeof window !== "undefined") {
+    const token =
+      getAuthToken() ?? localStorage.getItem("token");
 
-API.interceptors.request.use(
-  (config) => {
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
 
+  return config;
+});
+
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
     if (
-      typeof window !==
-      "undefined"
+      typeof window !== "undefined" &&
+      error?.response?.status === 401
     ) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("auth-storage");
 
-      const token =
-        localStorage.getItem(
-          "token"
-        );
+      clearAuthCookies();
 
-      if (token) {
-
-        config.headers.Authorization =
-          `Bearer ${token}`;
+      if (!window.location.pathname.startsWith("/auth/")) {
+        window.location.href = "/auth/login";
       }
     }
 
-    return config;
+    return Promise.reject(error);
   }
 );

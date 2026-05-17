@@ -20,7 +20,11 @@ export default function DashboardLayout({
 
       <main className="
         flex-1
+        min-w-0
+        overflow-x-hidden
         overflow-y-auto
+        pb-[calc(5.25rem+env(safe-area-inset-bottom,0px))]
+        lg:pb-0
       ">
 
         {children}

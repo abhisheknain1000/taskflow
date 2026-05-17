@@ -48,7 +48,7 @@ export default function AuthWrapper({
         <div className="w-full max-w-md space-y-8">
           
           <div className="space-y-2 text-center lg:text-left">
-            <h1 className="text-4xl font-bold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
               {title}
             </h1>
 
@@ -57,7 +57,7 @@ export default function AuthWrapper({
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 sm:p-8 shadow-2xl">
+          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 sm:p-8 shadow-2xl">
             {children}
           </div>
         </div>

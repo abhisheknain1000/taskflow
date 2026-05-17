@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createProject } from "@/services/project-service";
 import { useProjectStore } from "@/store/project-store";
+import { dialogTriggerBtn } from "@/lib/responsive-classes";
 function parseEmails(value: string): string[] {
   return value
     .split(/[,;\n]/)
@@ -81,13 +82,13 @@ export default function CreateProjectDialog() {
       }}
     >
       <DialogTrigger asChild>
-        <Button className="bg-[#7C5CFF] hover:bg-[#6D4EFF] rounded-2xl px-6 h-12 gap-2">
+        <Button className={`${dialogTriggerBtn} shadow-lg shadow-[#7C5CFF]/20`}>
           <Plus size={20} />
           New Project
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="bg-[#0B1020] border-white/10 text-white sm:max-w-[520px]">
+      <DialogContent className="bg-[#0B1020] border-white/10 text-white sm:max-w-[520px] max-h-[min(90vh,40rem)] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">Create Project</DialogTitle>
           <DialogDescription className="text-slate-400">
